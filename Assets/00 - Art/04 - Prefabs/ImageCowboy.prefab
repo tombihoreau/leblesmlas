@@ -142,10 +142,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9203876393288198046, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
       propertyPath: m_Name
-      value: ImgCowboyDamage Variant
+      value: ImageCowboy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9203876393288198046, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6260304554869666426}
   m_SourcePrefab: {fileID: 100100000, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
+--- !u!1 &7858261336581355443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9203876393288198046, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
+  m_PrefabInstance: {fileID: 1347873558718959661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-6260304554869666426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7858261336581355443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65dcec754c57452db53f211ac98e116, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'

@@ -1,22 +1,17 @@
 using UnityEngine;
+using System;
 
 public class PlayerXP : MonoBehaviour
 {
-    [Header("Level")]
     public int level = 1;
-
-    [Header("XP")]
     public int currentXP = 0;
 
-    [Tooltip("XP nécessaire pour passer du niveau 1 au niveau 2")]
     public int baseMaxXP = 10;
-
-    [Tooltip("Ex: 10 = +10% d'XP requis par niveau")]
     [Range(0f, 200f)]
     public float growthPercentPerLevel = 10f;
 
-    [Header("UI")]
-    [SerializeField] private XPBarUI xpBarUI;
+    public static event Action<int, int, int> OnXPChanged;
+    public static event Action<int> OnLevelUp;
 
     private int MaxXPForCurrentLevel()
     {
@@ -26,7 +21,7 @@ public class PlayerXP : MonoBehaviour
 
     private void Start()
     {
-        RefreshUI();
+        NotifyXPChanged();
     }
 
     public void AddXP(int amount)
@@ -37,17 +32,14 @@ public class PlayerXP : MonoBehaviour
         {
             currentXP -= MaxXPForCurrentLevel();
             level++;
+            OnLevelUp?.Invoke(level);
         }
 
-        RefreshUI();
+        NotifyXPChanged();
     }
 
-    private void RefreshUI()
+    private void NotifyXPChanged()
     {
-        int maxXP = MaxXPForCurrentLevel();
-        if (xpBarUI != null)
-            xpBarUI.SetUI(level, currentXP, maxXP);
-
-        Debug.Log($"LVL {level} | XP {currentXP}/{maxXP} (+{growthPercentPerLevel}%/lvl)");
+        OnXPChanged?.Invoke(level, currentXP, MaxXPForCurrentLevel());
     }
 }

@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   pickupRange: 2
   moveSpeed: 8
-  xpValue: 1
+  xpValue: 3
 --- !u!1001 &7808182788004086648
 PrefabInstance:
   m_ObjectHideFlags: 0
