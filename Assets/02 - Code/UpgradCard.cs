@@ -14,12 +14,14 @@ public enum UpgradeType
 public class UpgradeCard : MonoBehaviour
 {
     [SerializeField] private UpgradeType upgradeType;
-
+    private LevelUpUI _levelUpUI;
     private Button _button;
 
     private void Awake()
     {
-        _button = GetComponent<Button>();
+        _levelUpUI = FindFirstObjectByType<LevelUpUI>();
+        _button = GetComponentInChildren<Button>();
+        Debug.Log("UpgradeCard: " + _button);
         if (_button != null)
         {
             _button.onClick.AddListener(OnClick);
@@ -38,7 +40,7 @@ public class UpgradeCard : MonoBehaviour
 
     private void OnClick()
     {
-        //UpgradeManager.Instance.Apply(upgradeType);
-        //LevelUpUI.Hide();
+        Debug.Log("click" + _levelUpUI);
+        if (_levelUpUI != null) _levelUpUI.HideNow();
     }
 }
