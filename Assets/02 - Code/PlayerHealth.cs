@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float maxHp = 100f;
     [SerializeField] private Image barreDeVieImage;
     [SerializeField] private TextMeshProUGUI hpTexte;
-    [SerializeField] private bool estMort = false;
+    [SerializeField] public bool estMort = false;
 
     [Header("Couleurs du Texte")]
     [SerializeField] private Color couleurNormale = Color.white;
@@ -46,6 +46,8 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float dmg, Vector3 positionAgresseur)
     {
+        if (estMort) return;
+        
         _hp -= dmg;
         _hp = Mathf.Max(0, _hp);
 
@@ -122,6 +124,9 @@ public class PlayerHealth : MonoBehaviour
         if (TryGetComponent(out Animator anim)) anim.enabled = false;
         var controller = GetComponent("ThirdPersonController") as MonoBehaviour;
         if (controller != null) controller.enabled = false;
+        
+        var weapon = GetComponent("SwordWeapon")  as MonoBehaviour;
+        if (weapon is not null) weapon.enabled = false;
         
         Time.timeScale = 0.5f;
         

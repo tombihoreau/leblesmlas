@@ -5,6 +5,7 @@ public class IAMonstre : MonoBehaviour
 {
     private NavMeshAgent _agent;
     private Transform _joueur;
+    private PlayerHealth _playerHealth;
 
     void Start()
     {
@@ -14,14 +15,23 @@ public class IAMonstre : MonoBehaviour
         if (joueurObj != null)
         {
             _joueur = joueurObj.transform;
+            _playerHealth = joueurObj.GetComponent<PlayerHealth>();
         }
     }
 
     void Update()
     {
-        if (_joueur is not null)
+        // On vérifie si le joueur existe ET s'il est encore en vie
+        if (_joueur is not null && _playerHealth is not null && !_playerHealth.estMort)
         {
             _agent.SetDestination(_joueur.position);
+        }
+        else
+        {
+            if (_agent.enabled && _agent.isOnNavMesh)
+            {
+                _agent.isStopped = true; 
+            }
         }
     }
 }

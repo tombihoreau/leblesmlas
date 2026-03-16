@@ -15,10 +15,18 @@ public class SpawnerVaguesAutomatique : MonoBehaviour
     public float rayonSpawn = 20f;
 
     private int _vagueActuelle = 0;
+    
+    private PlayerHealth _playerHealth;
 
     void Start()
     {
-        // On lance la boucle infinie des vagues
+        // On cherche le joueur et son script de santé
+        GameObject joueurObj = GameObject.FindGameObjectWithTag("Player");
+        if (joueurObj != null)
+        {
+            _playerHealth = joueurObj.GetComponent<PlayerHealth>();
+        }
+
         StartCoroutine(BoucleDeJeu());
     }
 
@@ -26,6 +34,10 @@ public class SpawnerVaguesAutomatique : MonoBehaviour
     {
         while (true)
         {
+            if (_playerHealth is not null && _playerHealth.estMort) 
+            {
+                yield break;
+            }
             _vagueActuelle++;
 
             int nbASpawn = Mathf.RoundToInt(nbMonstresInitial * Mathf.Pow(multiplicateurDifficulté, _vagueActuelle - 1));
