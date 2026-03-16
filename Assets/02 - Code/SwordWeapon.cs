@@ -1,14 +1,10 @@
 using UnityEngine;
 
-public class AutoAttack : MonoBehaviour
+public class SwordWeapon : Weapon
 {
     [Header("Targeting")]
     [SerializeField] private float attackRange = 5f;
     [SerializeField] private LayerMask enemyLayer;
-
-    [Header("Attack")]
-    [SerializeField] private float attackInterval = 2f;
-    [SerializeField] private float damage = 8f;
 
     [Header("Hit")]
     [SerializeField] private float hitRadius = 1.5f;
@@ -19,18 +15,12 @@ public class AutoAttack : MonoBehaviour
     [SerializeField] private float heightOffset = 1.0f;
     [SerializeField] private float vfxLifetime = 2f;
 
-    private float _timer;
-
-    private void Update()
+    protected override void TryAttack()
     {
-        _timer -= Time.deltaTime;
-        if (_timer > 0f) return;
-
         Transform target = FindClosestEnemy();
         if (target is null) return;
 
         Attack(target);
-        _timer = attackInterval;
     }
 
     private Transform FindClosestEnemy()
@@ -56,30 +46,24 @@ public class AutoAttack : MonoBehaviour
 
     private void Attack(Transform target)
     {
-        // Direction vers la cible
         Vector3 dir = target.position - transform.position;
         dir.y = 0f;
+
         if (dir.sqrMagnitude < 0.0001f)
             dir = transform.forward;
 
         Quaternion rot = Quaternion.LookRotation(dir.normalized, Vector3.up);
 
-        // Position d'apparition du slash
         Vector3 pos = transform.position + rot * Vector3.forward * spawnDistance;
         pos.y += heightOffset;
-
-        // Spawn VFX
+        
         if (slashPrefab is not null)
         {
             GameObject vfx = Instantiate(slashPrefab, pos, rot);
-
-            // Adapte la taille du VFX à la zone d'attaque
             vfx.transform.localScale *= hitRadius;
-
             Destroy(vfx, vfxLifetime);
         }
 
-        // Zone de dégâts
         Vector3 hitCenter = transform.position + rot * Vector3.forward * spawnDistance;
 
         Collider[] victims = Physics.OverlapSphere(
@@ -99,9 +83,15 @@ public class AutoAttack : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    public void IncreaseAttackRange(float amount)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        attackRange += amount;
+        Debug.Log("Sword attack range augmentée : " + attackRange);
+    }
+
+    public void IncreaseAttackSize(float amount)
+    {
+        hitRadius += amount;
+        Debug.Log("Sword hit radius augmentée : " + hitRadius);
     }
 }

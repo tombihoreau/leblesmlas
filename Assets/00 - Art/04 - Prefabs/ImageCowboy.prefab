@@ -142,10 +142,76 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9203876393288198046, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
       propertyPath: m_Name
-      value: ImgCowboyDamage Variant
+      value: ImageCowboy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: -102946333243836154, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
+    - {fileID: 433641263173447171, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 6910309976028849337, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9203876393288198046, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5646055492197483384}
   m_SourcePrefab: {fileID: 100100000, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
+--- !u!114 &2214508744129336027 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 868939798021571318, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
+  m_PrefabInstance: {fileID: 1347873558718959661}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7858261336581355443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!1 &7858261336581355443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9203876393288198046, guid: b069a6ea312934cafa13ef8b15120ad6, type: 3}
+  m_PrefabInstance: {fileID: 1347873558718959661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5646055492197483384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7858261336581355443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 2214508744129336027}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
