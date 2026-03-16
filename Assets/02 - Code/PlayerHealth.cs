@@ -16,6 +16,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Color couleurNormale = Color.white;
     [SerializeField] private Color couleurDanger = Color.yellow; // Jaune quand la vie est basse
     [SerializeField] private float seuilDanger = 0.3f; // 30% de vie restante
+    
+    [Header("Game Over")]
+    [SerializeField] private GameObject ecranGameOver;
 
     [Header("Paramètres de Combat")]
     [SerializeField] private float forceRecul = 5f;
@@ -38,6 +41,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         MettreAJourInterface();
+        if (ecranGameOver != null) ecranGameOver.SetActive(false);
     }
 
     public void TakeDamage(float dmg, Vector3 positionAgresseur)
@@ -112,26 +116,22 @@ public class PlayerHealth : MonoBehaviour
 
     private void Mourir()
     {
-        if (estMort) return; // Sécurité pour ne pas mourir deux fois
         estMort = true;
-    
         Debug.Log("Le Cowboy est mort...");
-
-        // 1. Désactiver le déplacement
-        // On cherche le script "ThirdPersonController" (le nom exact de ton script)
-        var controller = GetComponent<ThirdPersonController>();
-        if (controller != null)
+        
+        if (TryGetComponent(out Animator anim)) anim.enabled = false;
+        var controller = GetComponent("ThirdPersonController") as MonoBehaviour;
+        if (controller != null) controller.enabled = false;
+        
+        Time.timeScale = 0.5f;
+        
+        if (ecranGameOver != null)
         {
-            controller.enabled = false;
+            ecranGameOver.SetActive(true);
         }
         
-        Animator anim = GetComponent<Animator>();
-        if (anim != null)
-        {
-            anim.enabled = false;
-        }
-    
-        // Optionnel : Ralentir le temps pour un effet dramatique
-        Time.timeScale = 0.5f; 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
     }
 }
