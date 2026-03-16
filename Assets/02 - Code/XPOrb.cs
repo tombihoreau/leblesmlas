@@ -2,33 +2,37 @@ using UnityEngine;
 
 public class XPOrb : MonoBehaviour
 {
-    [SerializeField] private float pickupRange = 2f;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private int xpValue = 1;
 
     private Transform _player;
+    private PlayerMagnet _playerMagnet;
 
     private void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            _player = playerObject.transform;
+            _playerMagnet = playerObject.GetComponent<PlayerMagnet>();
+        }
     }
 
     private void Update()
     {
-        if (_player == null) return;
+        if (_player == null || _playerMagnet == null) return;
 
         float distance = Vector3.Distance(transform.position, _player.position);
 
-        if (distance <= pickupRange)
+        if (distance <= _playerMagnet.PickupRange)
         {
-            // déplacement vers le joueur
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 _player.position,
                 moveSpeed * Time.deltaTime
             );
 
-            // si très proche → collecter
             if (distance <= 0.2f)
             {
                 Collect();

@@ -85,20 +85,32 @@ public class LevelUpUI : MonoBehaviour
         for (int i = 0; i < childCount; i++)
             ameliorationPanel.transform.GetChild(i).gameObject.SetActive(false);
 
-        // Indices
-        var indexes = new System.Collections.Generic.List<int>(childCount);
-        for (int i = 0; i < childCount; i++) indexes.Add(i);
+        // Liste des cartes disponibles
+        var availableCards = new System.Collections.Generic.List<Transform>();
 
-        // Shuffle
-        for (int i = 0; i < indexes.Count; i++)
+        for (int i = 0; i < childCount; i++)
         {
-            int r = Random.Range(i, indexes.Count);
-            (indexes[i], indexes[r]) = (indexes[r], indexes[i]);
+            Transform child = ameliorationPanel.transform.GetChild(i);
+            UpgradeCard card = child.GetComponent<UpgradeCard>();
+
+            if (card == null || card.CanBeShown())
+            {
+                availableCards.Add(child);
+            }
         }
 
-        // Afficher 3
-        int n = Mathf.Min(3, childCount);
+        if (availableCards.Count == 0) return;
+
+        // Shuffle
+        for (int i = 0; i < availableCards.Count; i++)
+        {
+            int r = Random.Range(i, availableCards.Count);
+            (availableCards[i], availableCards[r]) = (availableCards[r], availableCards[i]);
+        }
+
+        // Afficher 3 cartes max
+        int n = Mathf.Min(3, availableCards.Count);
         for (int i = 0; i < n; i++)
-            ameliorationPanel.transform.GetChild(indexes[i]).gameObject.SetActive(true);
+            availableCards[i].gameObject.SetActive(true);
     }
 }
