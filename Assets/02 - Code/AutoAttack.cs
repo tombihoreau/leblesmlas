@@ -27,7 +27,7 @@ public class AutoAttack : MonoBehaviour
         if (_timer > 0f) return;
 
         Transform target = FindClosestEnemy();
-        if (target == null) return;
+        if (target is null) return;
 
         Attack(target);
         _timer = attackInterval;
@@ -69,7 +69,7 @@ public class AutoAttack : MonoBehaviour
         pos.y += heightOffset;
 
         // Spawn VFX
-        if (slashPrefab != null)
+        if (slashPrefab is not null)
         {
             GameObject vfx = Instantiate(slashPrefab, pos, rot);
 
@@ -92,7 +92,7 @@ public class AutoAttack : MonoBehaviour
         for (int i = 0; i < victims.Length; i++)
         {
             EnemyHealth hp = victims[i].GetComponentInParent<EnemyHealth>();
-            if (hp != null)
+            if (hp is not null)
             {
                 hp.TakeDamage(damage);
             }

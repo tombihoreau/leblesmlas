@@ -9,7 +9,7 @@ public class XPBarUI : MonoBehaviour
     [SerializeField] private GameObject levelUpCanvas;
     public void SetUI(int level, int currentXP, int maxXP)
     {
-        if (levelText != null)
+        if (levelText is not null)
             levelText.text = "LVL " + level;
 
         float t = (float)currentXP / maxXP;

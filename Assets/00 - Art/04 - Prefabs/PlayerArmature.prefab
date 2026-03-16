@@ -1303,6 +1303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4471e82b52f222d4f8df76f18015c8d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Caracter
+  barreDeVieImage: {fileID: 0}
   maxHp: 50
   forceRecul: 5
 --- !u!1 &3913635367577168324
@@ -2627,6 +2628,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 582712911580019775, guid: c56539a9ddfb2e54292cec0f8e069f23, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 582712911580019775, guid: c56539a9ddfb2e54292cec0f8e069f23, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a2102f4dfe04081428ea88f2460e7f74, type: 2}
     m_RemovedComponents:
     - {fileID: 582712911575859965, guid: c56539a9ddfb2e54292cec0f8e069f23, type: 3}
     m_RemovedGameObjects: []

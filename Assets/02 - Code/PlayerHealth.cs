@@ -1,32 +1,89 @@
 using System.Collections;
+using StarterAssets;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro; // Obligatoire pour TextMeshPro
 
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("Paramètres de Vie")]
     [SerializeField] private float maxHp = 100f;
+    [SerializeField] private Image barreDeVieImage;
+    [SerializeField] private TextMeshProUGUI hpTexte;
+    [SerializeField] private bool estMort = false;
+
+    [Header("Couleurs du Texte")]
+    [SerializeField] private Color couleurNormale = Color.white;
+    [SerializeField] private Color couleurDanger = Color.yellow; // Jaune quand la vie est basse
+    [SerializeField] private float seuilDanger = 0.3f; // 30% de vie restante
+
+    [Header("Paramètres de Combat")]
     [SerializeField] private float forceRecul = 5f;
-    private float _hp;
-    
-    private Renderer _renderer;
+    [SerializeField] private Material materialDegats;
+
     private Rigidbody _rb;
     private SkinnedMeshRenderer _skinnedRenderer;
+    private Material _materialOriginal;
+    private float _hp;
 
     private void Awake()
     {
         _hp = maxHp;
         _rb = GetComponent<Rigidbody>();
         _skinnedRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+
+        if (_skinnedRenderer != null)
+        {
+            _materialOriginal = _skinnedRenderer.material;
+        }
+
+        MettreAJourInterface();
     }
 
     public void TakeDamage(float dmg, Vector3 positionAgresseur)
     {
         _hp -= dmg;
-        AppliquerRecul(positionAgresseur);
-        
-        StopAllCoroutines();
-        StartCoroutine(FlashInvisibilite());
+        _hp = Mathf.Max(0, _hp);
 
-        if (_hp <= 0f) Debug.Log("Le Cowboy est mort...");
+        MettreAJourInterface();
+        
+        if (_hp > 0f)
+        {
+            AppliquerRecul(positionAgresseur);
+            StopAllCoroutines();
+            StartCoroutine(EffetFlashDegats());
+        }
+        else
+        {
+            Mourir();
+        }
+    }
+
+    private void MettreAJourInterface()
+    {
+        float ratio = _hp / maxHp;
+
+        // 1. Mise à jour de la barre
+        if (barreDeVieImage is not null)
+        {
+            barreDeVieImage.fillAmount = ratio;
+        }
+
+        // 2. Mise à jour du texte et de sa couleur
+        if (hpTexte is not null)
+        {
+            hpTexte.text = $"{Mathf.CeilToInt(_hp)} / {maxHp}";
+
+            // Si on est en dessous du seuil (ex: 30%), on passe en jaune
+            if (ratio <= seuilDanger)
+            {
+                hpTexte.color = couleurDanger;
+            }
+            else
+            {
+                hpTexte.color = couleurNormale;
+            }
+        }
     }
 
     private void AppliquerRecul(Vector3 source)
@@ -34,21 +91,47 @@ public class PlayerHealth : MonoBehaviour
         if (_rb != null)
         {
             Vector3 direction = (transform.position - source).normalized;
-            direction.y = 0.5f; 
+            direction.y = 0.5f;
             _rb.AddForce(direction * forceRecul, ForceMode.Impulse);
         }
     }
 
-    private IEnumerator FlashInvisibilite()
+    private IEnumerator EffetFlashDegats()
     {
-        if (_skinnedRenderer is null) yield break;
-        
-        for (int i = 0; i < 3; i++)
+        if (_skinnedRenderer is null || materialDegats is null) yield break;
+
+        Material[] matsAvecFlash = new Material[2];
+        matsAvecFlash[0] = _materialOriginal;
+        matsAvecFlash[1] = materialDegats;
+
+        _skinnedRenderer.materials = matsAvecFlash;
+        yield return new WaitForSeconds(0.15f);
+        _skinnedRenderer.materials = new Material[] { _materialOriginal };
+    }
+    
+
+    private void Mourir()
+    {
+        if (estMort) return; // Sécurité pour ne pas mourir deux fois
+        estMort = true;
+    
+        Debug.Log("Le Cowboy est mort...");
+
+        // 1. Désactiver le déplacement
+        // On cherche le script "ThirdPersonController" (le nom exact de ton script)
+        var controller = GetComponent<ThirdPersonController>();
+        if (controller != null)
         {
-            _skinnedRenderer.enabled = false; // Disparaît
-            yield return new WaitForSeconds(0.05f);
-            _skinnedRenderer.enabled = true; // Réapparaît
-            yield return new WaitForSeconds(0.05f);
+            controller.enabled = false;
         }
+        
+        Animator anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.enabled = false;
+        }
+    
+        // Optionnel : Ralentir le temps pour un effet dramatique
+        Time.timeScale = 0.5f; 
     }
 }
