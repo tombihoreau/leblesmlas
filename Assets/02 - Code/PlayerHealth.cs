@@ -68,6 +68,8 @@ public class PlayerHealth : MonoBehaviour
 
     public void RejouerLaPartie()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
