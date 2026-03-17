@@ -3,6 +3,7 @@ using StarterAssets;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro; // Obligatoire pour TextMeshPro
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Color couleurNormale = Color.white;
     [SerializeField] private Color couleurDanger = Color.yellow; // Jaune quand la vie est basse
     [SerializeField] private float seuilDanger = 0.3f; // 30% de vie restante
-    
+
     [Header("Game Over")]
     [SerializeField] private GameObject ecranGameOver;
 
@@ -47,12 +48,12 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float dmg, Vector3 positionAgresseur)
     {
         if (estMort) return;
-        
+
         _hp -= dmg;
         _hp = Mathf.Max(0, _hp);
 
         MettreAJourInterface();
-        
+
         if (_hp > 0f)
         {
             AppliquerRecul(positionAgresseur);
@@ -63,6 +64,12 @@ public class PlayerHealth : MonoBehaviour
         {
             Mourir();
         }
+    }
+
+    public void RejouerLaPartie()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void MettreAJourInterface()
@@ -114,28 +121,28 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         _skinnedRenderer.materials = new Material[] { _materialOriginal };
     }
-    
+
 
     private void Mourir()
     {
         estMort = true;
-        
+
         if (TryGetComponent(out Animator anim)) anim.enabled = false;
         var controller = GetComponent("ThirdPersonController") as MonoBehaviour;
         if (controller != null) controller.enabled = false;
-        
-        var weapon = GetComponent("SwordWeapon")  as MonoBehaviour;
+
+        var weapon = GetComponent("SwordWeapon") as MonoBehaviour;
         if (weapon is not null) weapon.enabled = false;
-        
+
         Time.timeScale = 0.5f;
-        
+
         if (ecranGameOver != null)
         {
             ecranGameOver.SetActive(true);
         }
-        
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        
+
     }
 }

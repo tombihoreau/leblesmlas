@@ -1,10 +1,11 @@
 using UnityEngine;
-
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private float maxHp = 20f;
     private float _hp;
     public GameObject xpPrefab;
+    public static System.Action OnEnemyKilled;
+
     private void Awake() => _hp = maxHp;
 
     public void TakeDamage(float dmg)
@@ -14,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
         {
             Destroy(gameObject);
             SpawnXP();
+            OnEnemyKilled?.Invoke();
         }
     }
 
