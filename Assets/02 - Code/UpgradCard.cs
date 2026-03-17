@@ -51,10 +51,6 @@ public class UpgradeCard : MonoBehaviour
         {
             _button.onClick.AddListener(OnClick);
         }
-        else
-        {
-            Debug.LogError("UpgradeCard: pas de Button sur " + gameObject.name);
-        }
     }
 
     private void OnDestroy()
@@ -132,7 +128,6 @@ public class UpgradeCard : MonoBehaviour
                 if (explosionWeapon != null)
                 {
                     explosionWeapon.enabled = true;
-                    Debug.Log("ExplosionWeapon débloquée");
                 }
                 break;
 
@@ -146,7 +141,5 @@ public class UpgradeCard : MonoBehaviour
                     explosionWeapon.IncreaseAttackSize(attackSizeBonus);
                 break;
         }
-
-        Debug.Log("Upgrade appliquée : " + upgradeType);
     }
 }

@@ -86,12 +86,10 @@ public class SwordWeapon : Weapon
     public void IncreaseAttackRange(float amount)
     {
         attackRange += amount;
-        Debug.Log("Sword attack range augmentée : " + attackRange);
     }
 
     public void IncreaseAttackSize(float amount)
     {
         hitRadius += amount;
-        Debug.Log("Sword hit radius augmentée : " + hitRadius);
     }
 }

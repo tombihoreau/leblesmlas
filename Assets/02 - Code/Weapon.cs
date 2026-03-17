@@ -22,7 +22,6 @@ public abstract class Weapon : MonoBehaviour
     public virtual void IncreaseDamage(float amount)
     {
         damage += amount;
-        Debug.Log(name + " damage augmenté : " + damage);
     }
 
     public virtual void IncreaseAttackSpeed(float percent)
@@ -31,7 +30,5 @@ public abstract class Weapon : MonoBehaviour
 
         if (attackInterval < 0.1f)
             attackInterval = 0.1f;
-
-        Debug.Log(name + " attack interval réduit : " + attackInterval);
     }
 }

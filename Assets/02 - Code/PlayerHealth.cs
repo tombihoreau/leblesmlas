@@ -119,7 +119,6 @@ public class PlayerHealth : MonoBehaviour
     private void Mourir()
     {
         estMort = true;
-        Debug.Log("Le Cowboy est mort...");
         
         if (TryGetComponent(out Animator anim)) anim.enabled = false;
         var controller = GetComponent("ThirdPersonController") as MonoBehaviour;

@@ -60,7 +60,6 @@ public class SpawnerVaguesAutomatique : MonoBehaviour
     void ApparitionAleatoire()
     {
         if (prefabsMonstres == null || prefabsMonstres.Length == 0) return;
-
         Vector3 positionValide = Vector3.zero;
         bool pointTrouve = false;
         int tentatives = 0;
@@ -78,7 +77,6 @@ public class SpawnerVaguesAutomatique : MonoBehaviour
             }
             tentatives++;
         }
-
         if (pointTrouve)
         {
             int indexAleatoire = Random.Range(0, prefabsMonstres.Length);

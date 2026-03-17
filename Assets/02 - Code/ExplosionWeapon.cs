@@ -15,16 +15,11 @@ public class ExplosionWeapon : Weapon
 
     protected override void TryAttack()
     {
-        Debug.Log("ExplosionWeapon TryAttack");
-
         Transform target = FindClosestEnemy();
         if (target == null)
         {
-            Debug.Log("ExplosionWeapon : aucune cible");
             return;
         }
-
-        Debug.Log("ExplosionWeapon : cible trouvée " + target.name);
         Attack(target);
     }
 
@@ -68,14 +63,11 @@ public class ExplosionWeapon : Weapon
             QueryTriggerInteraction.Ignore
         );
 
-        Debug.Log("ExplosionWeapon victims count: " + victims.Length);
-
         for (int i = 0; i < victims.Length; i++)
         {
             EnemyHealth hp = victims[i].GetComponentInParent<EnemyHealth>();
             if (hp != null)
             {
-                Debug.Log("ExplosionWeapon hit : " + victims[i].name);
                 hp.TakeDamage(damage);
             }
         }
@@ -84,12 +76,10 @@ public class ExplosionWeapon : Weapon
     public void IncreaseAttackRange(float amount)
     {
         attackRange += amount;
-        Debug.Log("Sword attack range augmentée : " + attackRange);
     }
 
     public void IncreaseAttackSize(float amount)
     {
         hitRadius += amount;
-        Debug.Log("Sword hit radius augmentée : " + hitRadius);
     }
 }
